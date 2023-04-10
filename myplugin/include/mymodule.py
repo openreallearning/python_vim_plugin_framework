@@ -1,3 +1,9 @@
+import os
+import sys
+
+sys.path.append('../src/')
+
+import calculator
 import vim
 
 def foo():
@@ -6,7 +12,7 @@ def foo():
     return "Hello World!\n\n"
 
 def bar(x, y):
-    return str(int(x) + int(y))
+    return calculator.sum(int(x), int(y))
 
 def none():
     print('ok')

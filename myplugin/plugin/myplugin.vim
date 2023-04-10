@@ -1,18 +1,23 @@
 " myplugin.vim
 
-let current_dir = expand('<sfile>:p:h')
-let relative_path = '../python'
-let g:myplugin_python_dir = resolve(current_dir . '/' . relative_path)
-set rtp+=myplugin_python_dir
+let current_dir = expand('<sfile>:p:h/')
 
+let g:include_path = resolve(current_dir . '/' . '../include')
+let g:src_path = resolve(current_dir . '/' . '../src')
+
+let $PYTHONPATH = expand("%:p:h") . ":" . $PYTHONPATH
+
+python3 << EOF
+import sys
+
+sys.path.append(vim.eval('g:include_path'))
+sys.path.append(vim.eval('g:src_path'))
+
+import vim
+EOF
 
 function! CallPythonFunction(command_name, module_name, ...)
   python3 << EOF
-import sys
-sys.path.append(vim.eval('g:myplugin_python_dir'))
-
-import vim
-
 # Get the function name and arguments from Vim script
 args = vim.eval('a:000')
 
@@ -39,12 +44,11 @@ endfunction
 
 function! CreatePythonCommands()
   python3 << EOF
-import vim
 import os
 import importlib.util
 
 # Get the Python directory from Vim script
-python_dir = vim.eval('g:myplugin_python_dir')
+python_dir = vim.eval('g:include_path')
 
 # Find all Python modules in the directory
 modules = [f for f in os.listdir(python_dir) if f.endswith('.py') and not f.startswith('__')]
