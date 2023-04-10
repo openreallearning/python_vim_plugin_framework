@@ -56,11 +56,23 @@ for module_name in module_names:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     functions = [f for f in dir(module) if callable(getattr(module, f))]
+    suggestions = str(functions)
 
     command_name = module_name.capitalize()
+
+    vim.command(f"""
+    function! Complete{command_name}(ArgLead, CmdLine, CursorPos) abort
+      let cmd_parts = split(a:CmdLine)
+      if len(cmd_parts) == 1
+        return {suggestions}
+      else
+        return []
+      endif
+    endfunction
+    """)
+
     command_string = 'call CallPythonFunction("' + command_name + '", "' + module_name + '", <q-args>)'
-    command = 'command! -nargs=* ' + command_name + ' :execute \'' + command_string + '\''
-    print(command)
+    command = 'command! -nargs=* -complete=customlist,Complete' + command_name + ' ' + command_name + ' :execute \'' + command_string + '\''
     vim.command(command)
 EOF
 endfunction
