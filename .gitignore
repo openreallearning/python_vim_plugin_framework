@@ -1,0 +1,6 @@
+!.gitignore
+
+.*
+*.swp
+__*__
+*.egg-info
