@@ -2,17 +2,17 @@
 
 let current_dir = expand('<sfile>:p:h/')
 
-let g:include_path = resolve(current_dir . '/' . '../include')
-let g:src_path = resolve(current_dir . '/' . '../src')
+if !exists('g:include_path')
+  let g:include_path = resolve(current_dir . '/' . '../include')
+endif
+
+if !exists('g:src_path')
+  let g:src_path = resolve(current_dir . '/' . '../src')
+endif
 
 let $PYTHONPATH = expand("%:p:h") . ":" . $PYTHONPATH
 
 python3 << EOF
-import sys
-
-sys.path.append(vim.eval('g:include_path'))
-sys.path.append(vim.eval('g:src_path'))
-
 import vim
 EOF
 
@@ -41,9 +41,14 @@ EOF
 
 endfunction
 
-
 function! CreatePythonCommands()
-  python3 << EOF
+
+python3 << EOF
+
+import sys
+sys.path.append(vim.eval('g:src_path'))
+sys.path.append(vim.eval('g:include_path'))
+
 import os
 import importlib.util
 
