@@ -18,11 +18,14 @@ def create_plugin(plugin_name):
         f.write("""
 let current_dir = expand('<sfile>:p:h/')
 let g:include_path = resolve(current_dir . '/' . '../include')
+let current_dir = expand('<sfile>:p:h/')
+let g:src_path = resolve(current_dir . '/' . '../src')
 
 python3 << EOF
 import sys
 
 sys.path.append(vim.eval('g:include_path'))
+sys.path.append(vim.eval('g:src_path'))
 EOF
                 """)
         f.write("\nsource " + vim_script_path)
