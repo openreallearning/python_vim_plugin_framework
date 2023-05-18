@@ -1,9 +1,15 @@
 from setuptools import setup, find_packages
 
+description='A framework to easily create Vim plugins using Python',
 setup(
     name='vim-python-framework',
-    version='0.1.0',
-    description='A framework to easily create Vim plugins using Python',
+    version='0.1.1',
+    description=description,
+    long_description="""
+Python VIM Plugin Framework
+
+A framework to facilitate creation of VIM plugins using vanila python
+""",
     author='David Kennedy S. Araujo',
     author_email='software@davidkennedy.dev',
     packages=find_packages(),
