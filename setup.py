@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 description='A framework to easily create Vim plugins using Python',
 setup(
     name='vim-python-framework',
-    version='0.1.1',
+    version='1.0.0',
     description=description,
     long_description="""
 Python VIM Plugin Framework
