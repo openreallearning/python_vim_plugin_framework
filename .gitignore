@@ -4,3 +4,5 @@
 *.swp
 __*__
 *.egg-info
+dist/
+build/
